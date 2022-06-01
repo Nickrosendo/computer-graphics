@@ -1,29 +1,41 @@
-glColor3f(0, 0, 0);
-  glVertex3f(-0.52f, 0.9f, 0);
-  glVertex3f(-0.98f, 0, 0);
-  glVertex3f(-0.52f, -0.9f, 0);
+#include <GLFW/glfw3.h>
+#include <stdlib.h>
+#include <stdio.h>
+static void error_callback(int error, const char* description)
+{
+    fputs(description, stderr);
+}
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+static void draw_first_triangle() {
+  glBegin( GL_POINTS );
+  glColor4f( 0.95f, 0.207, 0.031f, 1.0f );
+  glVertex2f(-0.5f, 0.9f);
+  glVertex2f(-0.9, 0);
+  glVertex2f(-0.5f, -0.9f);
 
   glEnd();
 }
 
 static void draw_second_triangle() {
-  glBegin(GL_TRIANGLES);
-  glColor3f(1, 0, 0);
-  glVertex3f(0.5f, 1, 0);
-  glVertex3f(1, 0, 0);
-  glVertex3f(0.5f, -1, 0);
-
-  glColor3f(0, 0, 0);
-  glVertex3f(0.52f, 0.9f, 0);
-  glVertex3f(0.98f, 0, 0);
-  glVertex3f(0.52f, -0.9f, 0);
+  glBegin( GL_POINTS );
+  glColor4f( 0.95f, 0.207, 0.031f, 1.0f );
+  glVertex2f(0.5f, 0.9f);
+  glVertex2f(0.9f, 0);
+  glVertex2f(0.5f, -0.9f);
 
   glEnd();
 }
 
+
+
 static void draw_triangles() {
-   draw_first_triangle();
-   draw_second_triangle();
+  draw_first_triangle();
+  draw_second_triangle();
 }
 
 
@@ -44,10 +56,9 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         int width, height;
+        glPointSize( 10.0 );
         glfwGetFramebufferSize(window, &width, &height);
         glViewport(0, 0, width, height);
-        glLoadIdentity();
-        glOrtho(0, width, 0, height, -1, 1);
         draw_triangles(); 
         glfwSwapBuffers(window);
         glfwPollEvents();
